@@ -8,7 +8,13 @@
         style="width: 17px"
       />
     </div>
-    <input :type="type" :placeholder="placeholder" :value="modelValue" @input="change" />
+    <input
+      ref="input"
+      :type="type"
+      :placeholder="placeholder"
+      :value="modelValue"
+      @input="change"
+    />
 
     <button v-if="functionIcon" :class="$style.icon" @click="clickOnFunction">
       <img
@@ -42,6 +48,9 @@ export default defineComponent({
       if (this.functionClick) {
         this.$emit('update:modelValue', this.functionClick(this.modelValue));
       }
+    },
+    focus() {
+      (this.$refs['input'] as any).focus();
     },
   },
   data: () => {

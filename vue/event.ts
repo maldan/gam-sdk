@@ -14,7 +14,7 @@ export function init(app: any) {
         } else {
           clearTimeout(timer);
           clicks = 0;
-          console.log('sas');
+          binding?.value();
         }
       });
     },
