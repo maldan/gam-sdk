@@ -17,7 +17,12 @@
     />
 
     <button @click="isOpen = !isOpen" :class="$style.icon">
-      <img src="../asset/arrow_down.svg" alt="Settings" draggable="false" style="width: 17px" />
+      <img
+        src="../asset/icon/arrow_down.svg"
+        alt="Settings"
+        draggable="false"
+        style="width: 17px"
+      />
     </button>
     <div v-if="isOpen" :class="$style.items">
       <div @click="[select(x), (isOpen = false)]" :class="$style.item" v-for="x in items" :key="x">
