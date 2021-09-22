@@ -46,3 +46,16 @@ button {
 .shadow {
   box-shadow: 0px 1px 6px 2px #00000055;
 }
+
+@mixin base_button($bg, $color, $padding, $radius) {
+  background: $bg;
+  outline: none;
+  border: none;
+  padding: $padding;
+  color: $color;
+  border-radius: $radius;
+}
+
+.button_blue {
+  @include base_button(#2d88ff, #fefefe, 5px 10px, 2px);
+}
