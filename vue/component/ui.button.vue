@@ -3,7 +3,7 @@
     <div v-if="text" style="margin-right: 15px">{{ text }}</div>
     <img
       v-if="icon"
-      :src="require(`@/asset/${icon}.svg`)"
+      :src="require(`../asset/icon/${icon}.svg`)"
       alt="Add"
       draggable="false"
       style="width: 17px"

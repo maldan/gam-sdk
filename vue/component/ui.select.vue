@@ -2,7 +2,7 @@
   <div :class="$style.select">
     <div v-if="icon" :class="$style.icon">
       <img
-        :src="require(`@/asset/${icon}.svg`)"
+        :src="require(`../asset/${icon}.svg`)"
         alt="Settings"
         draggable="false"
         style="width: 17px"

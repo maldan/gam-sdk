@@ -4,6 +4,7 @@ import TextArea from './component/ui.textarea.vue';
 import Modal from './component/ui.modal.vue';
 import Select from './component/ui.select.vue';
 import Icon from './component/ui.icon.vue';
+import Header from './component/ui.header.vue';
 
 export default {
   install: (app: any, options: any) => {
@@ -13,5 +14,6 @@ export default {
     app.component('ui-modal', Modal);
     app.component('ui-select', Select);
     app.component('ui-icon', Icon);
+    app.component('ui-header', Header);
   },
 };
