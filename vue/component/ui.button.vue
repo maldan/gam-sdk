@@ -1,5 +1,5 @@
 <template>
-  <button :class="$style.button">
+  <button :class="$style.button" :style="style()">
     <div v-if="text" style="margin-right: 15px">{{ text }}</div>
     <img
       v-if="icon"
@@ -18,9 +18,23 @@ export default defineComponent({
   props: {
     text: String,
     icon: String,
+    size: {
+      type: String,
+      default: 'normal',
+    },
   },
   async mounted() {},
-  methods: {},
+  methods: {
+    style() {
+      if (this.size === 'compact') {
+        return {
+          padding: '7px 10px',
+          fontSize: '14px',
+        };
+      }
+      return {};
+    },
+  },
   data: () => {
     return {};
   },
