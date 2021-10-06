@@ -6,6 +6,8 @@ import Select from './component/ui.select.vue';
 import Icon from './component/ui.icon.vue';
 import Header from './component/ui.header.vue';
 import Table from './component/ui.table.vue';
+import Chart from './component/ui.chart.vue';
+import Schedule from './component/ui.schedule.vue';
 
 import ModalApprove from './component/modal/approve.vue';
 import ModalPrompt from './component/modal/prompt.vue';
@@ -20,6 +22,8 @@ export default {
     app.component('ui-icon', Icon);
     app.component('ui-header', Header);
     app.component('ui-table', Table);
+    app.component('ui-chart', Chart);
+    app.component('ui-schedule', Schedule);
 
     app.component('modal-approve', ModalApprove);
     app.component('modal-prompt', ModalPrompt);
