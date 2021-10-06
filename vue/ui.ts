@@ -7,6 +7,9 @@ import Icon from './component/ui.icon.vue';
 import Header from './component/ui.header.vue';
 import Table from './component/ui.table.vue';
 
+import ModalApprove from './component/modal/approve.vue';
+import ModalPrompt from './component/modal/prompt.vue';
+
 export default {
   install: (app: any, options: any) => {
     app.component('ui-input', Input);
@@ -17,5 +20,8 @@ export default {
     app.component('ui-icon', Icon);
     app.component('ui-header', Header);
     app.component('ui-table', Table);
+
+    app.component('modal-approve', ModalApprove);
+    app.component('modal-prompt', ModalPrompt);
   },
 };
