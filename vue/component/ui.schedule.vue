@@ -1,11 +1,12 @@
 <template>
   <div :class="$style.schedule">
+    <!-- Map -->
     <div :class="$style.year">
       <div :class="$style.month" v-for="(x, i) in month" :key="x">
         <div>{{ x }}</div>
         <div style="display: grid; margin-top: 10px; grid-template-columns: repeat(7, 15px)">
           <div
-            @click="$emit('select', z), (date = z)"
+            @click="$emit('select', new Date(z))"
             class="clickable"
             :class="[
               $style.cell,
@@ -27,8 +28,31 @@
         </div>
       </div>
     </div>
+
+    <!-- Info -->
     <div style="margin-top: 15px; color: #979797">
-      Date: {{ moment(date).format('DD MMM YYYY') }}
+      Date: {{ moment(date).format('DD MMM YYYY') }} | Total Year: {{ total.toFixed(2) }} |
+    </div>
+
+    <!-- Change year -->
+    <div style="margin-top: 5px">
+      <button
+        v-for="x in yearRange"
+        :class="[
+          $style.change_year,
+          date.getFullYear() === new Date().getFullYear() + x ? $style.selected : '',
+        ]"
+        class="clickable"
+        :key="x"
+        @click="
+          $emit(
+            'select',
+            new Date(new Date().getFullYear() + x, new Date().getMonth(), new Date().getDate()),
+          )
+        "
+      >
+        {{ new Date().getFullYear() + x }}
+      </button>
     </div>
   </div>
 </template>
@@ -39,32 +63,39 @@ import Moment from 'moment';
 
 export default defineComponent({
   props: {
-    //item: Object,
-    //type: String,
-    //mode: String,
+    date: {
+      type: Object,
+      default: () => {
+        return new Date();
+      },
+    },
     map: Object,
     max: {
       type: Number,
       required: true,
     },
     color: String,
+    yearRange: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   components: {},
+  watch: {
+    map(val: any) {
+      this.total = 0;
+      for (let s in val) {
+        this.total += val[s];
+      }
+    },
+    date(val: Date) {
+      this.refresh();
+    },
+  },
   async mounted() {
-    for (let i = 0; i < 12; i++) {
-      const l = this.getDates(i);
-      const ll = [];
-      let dd = l[0].getDay() - 1;
-      if (dd < 0) {
-        dd = 6;
-      }
-      for (let j = 0; j < dd; j++) {
-        ll.push(null);
-      }
-      this.days[i] = [...ll, ...l];
-    }
-
-    this.getYearMap();
+    this.refresh();
   },
   methods: {
     moment: Moment,
@@ -82,17 +113,24 @@ export default defineComponent({
 
       let mm = ('00' + ((amount * 255) | 0).toString(16)).slice(-2);
 
-      /*else if (power / (this as any)[this.type + '']?.[this.mode + ''] >= 0.8) return '#00ff4299';
-      else if (power / (this as any)[this.type + '']?.[this.mode + ''] >= 0.5) return '#ffec0999';
-      else if (power / (this as any)[this.type + '']?.[this.mode + ''] >= 0.2) return '#ff96157a';
-      else return '#fb0b0b63';*/
       return `${this.color || '#c97a19'}${mm}`;
     },
-    async getYearMap() {
-      // this.map = await RestApi.training.getYearMap(Moment(this.date).format('YYYY-MM-DD'));
+    refresh() {
+      for (let i = 0; i < 12; i++) {
+        const l = this.getDates(i);
+        const ll = [];
+        let dd = l[0].getDay() - 1;
+        if (dd < 0) {
+          dd = 6;
+        }
+        for (let j = 0; j < dd; j++) {
+          ll.push(null);
+        }
+        this.days[i] = [...ll, ...l];
+      }
     },
     getDates(month: number) {
-      const year = new Date().getFullYear();
+      const year = this.date.getFullYear();
       const out = [];
       for (let i = 1; i <= 32; i++) {
         const cFrom = new Date(
@@ -114,8 +152,7 @@ export default defineComponent({
     return {
       month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       days: [] as any[],
-      date: new Date(),
-      // map: {},
+      total: 0,
     };
   },
 });
@@ -164,6 +201,22 @@ export default defineComponent({
           color: #fefefe;
         }
       }
+    }
+  }
+
+  .change_year {
+    background: #525252;
+    padding: 5px 15px;
+    border: 0;
+    border-radius: 3px;
+    color: #fefefe;
+    font-weight: bold;
+    color: #c5c5c5;
+    margin-right: 5px;
+
+    &.selected {
+      background: #0075ce;
+      color: #fefefe;
     }
   }
 }

@@ -5,6 +5,7 @@ export type ModalStore = {
   name: string;
   data: any;
   func: () => void;
+  onSuccess: () => void;
 };
 export type ModalActionContext = ActionContext<ModalStore, MainTree>;
 
@@ -14,12 +15,14 @@ export default {
     name: '',
     data: {},
     func: () => {},
+    onSuccess: () => {},
   },
   mutations: {
     SET_MODAL(state: ModalStore, payload: any) {
       state.name = payload.name;
       state.data = payload.data;
       state.func = payload.func || function () {};
+      state.onSuccess = payload.onSuccess || function () {};
     },
   },
   actions: {
@@ -31,6 +34,7 @@ export default {
     },
     ok({ state, commit }: any) {
       state?.func();
+      state?.onSuccess();
       commit('SET_MODAL', {});
     },
   },
