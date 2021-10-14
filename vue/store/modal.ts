@@ -6,6 +6,7 @@ export type ModalStore = {
   data: any;
   func: () => void;
   onSuccess: () => void;
+  cloneData: () => any;
 };
 export type ModalActionContext = ActionContext<ModalStore, MainTree>;
 
@@ -16,6 +17,9 @@ export default {
     data: {},
     func: () => {},
     onSuccess: () => {},
+    cloneData() {
+      return JSON.parse(JSON.stringify(this.data));
+    },
   },
   mutations: {
     SET_MODAL(state: ModalStore, payload: any) {
