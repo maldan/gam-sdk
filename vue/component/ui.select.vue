@@ -2,7 +2,7 @@
   <div :class="$style.select">
     <div v-if="icon" :class="$style.icon">
       <img
-        :src="require(`../asset/${icon}.svg`)"
+        :src="require(`../asset/icon/${icon}.svg`)"
         alt="Settings"
         draggable="false"
         style="width: 17px"
@@ -24,8 +24,14 @@
         style="width: 17px"
       />
     </button>
-    <div v-if="isOpen" :class="$style.items">
-      <div @click="[select(x), (isOpen = false)]" :class="$style.item" v-for="x in items" :key="x">
+
+    <div v-if="isOpen" :class="$style.item_list">
+      <div
+        @click="select(x, i), (isOpen = false)"
+        :class="$style.item"
+        :key="x.label"
+        v-for="(x, i) in items"
+      >
         {{ x.label }}
       </div>
     </div>
@@ -42,10 +48,13 @@ export default defineComponent({
     items: Array,
     modelValue: String,
   },
-  async mounted() {},
+  async mounted() {
+    console.log(this.items);
+  },
   methods: {
-    select(x: unknown) {
+    select(x: any, index: number) {
       this.$emit('update:modelValue', x);
+      this.$emit('change', { ...x, index });
     },
   },
   data: () => {
@@ -63,7 +72,7 @@ export default defineComponent({
   flex: 1;
   position: relative;
 
-  .items {
+  .item_list {
     position: absolute;
     left: 0;
     top: 40px;
@@ -88,7 +97,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px 0 0 4px;
+    border-radius: 2px 0 0 2px;
     border-right: 1px solid #313131;
     box-sizing: border-box;
 
@@ -98,7 +107,7 @@ export default defineComponent({
 
     &:last-child {
       border: 0;
-      border-radius: 0 4px 4px 0;
+      border-radius: 0 2px 2px 0;
       border-left: 1px solid #313131;
     }
   }
@@ -125,7 +134,7 @@ export default defineComponent({
     color: #9d9d9d;
     border: 0;
     padding: 10px 15px;
-    border-radius: 4px;
+    border-radius: 2px;
     flex: 1;
     font-weight: bold;
     font-size: 16px;
