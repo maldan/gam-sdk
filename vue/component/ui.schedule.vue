@@ -31,7 +31,8 @@
 
     <!-- Info -->
     <div style="margin-top: 15px; color: #979797">
-      Date: {{ moment(date).format('DD MMM YYYY') }} | Total Year: {{ total.toFixed(2) }} |
+      Date: {{ moment(date).format('DD MMM YYYY') }} | Total Month: {{ totalMonth.toFixed(2) }} |
+      Total Year: {{ total.toFixed(2) }} |
     </div>
 
     <!-- Change year -->
@@ -85,17 +86,45 @@ export default defineComponent({
   components: {},
   watch: {
     map(val: any) {
-      this.total = 0;
-      for (let s in val) {
-        this.total += val[s];
-      }
+      this.calculateTotal();
     },
     date(val: Date) {
+      this.calculateTotal();
       this.refresh();
     },
   },
   async mounted() {
     this.refresh();
+
+    this.keyboardEvent = (e: KeyboardEvent) => {
+      if (this.$store.state.modal.name) {
+        return;
+      }
+      if (e.key === 'ArrowRight') {
+        // @ts-ignore
+        const date = Moment(this.date).add(1, 'day').toDate();
+        this.$emit('select', date);
+      }
+      if (e.key === 'ArrowLeft') {
+        // @ts-ignore
+        const date = Moment(this.date).add(-1, 'day').toDate();
+        this.$emit('select', date);
+      }
+      if (e.key === 'ArrowUp') {
+        // @ts-ignore
+        const date = Moment(this.date).add(-7, 'day').toDate();
+        this.$emit('select', date);
+      }
+      if (e.key === 'ArrowDown') {
+        // @ts-ignore
+        const date = Moment(this.date).add(7, 'day').toDate();
+        this.$emit('select', date);
+      }
+    };
+    document.addEventListener('keydown', this.keyboardEvent);
+  },
+  beforeUnmount() {
+    document.removeEventListener('keydown', this.keyboardEvent);
   },
   methods: {
     moment: Moment,
@@ -147,12 +176,24 @@ export default defineComponent({
       }
       return out;
     },
+    calculateTotal() {
+      this.total = 0;
+      this.totalMonth = 0;
+      for (let s in this.map) {
+        this.total += this.map[s];
+        if (Moment(this.date).format('YYYY-MM') === Moment(s).format('YYYY-MM')) {
+          this.totalMonth += this.map[s];
+        }
+      }
+    },
   },
   data: () => {
     return {
       month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       days: [] as any[],
       total: 0,
+      totalMonth: 0,
+      keyboardEvent: null as any,
     };
   },
 });
