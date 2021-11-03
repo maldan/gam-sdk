@@ -36,11 +36,11 @@ export default defineComponent({
 <style module lang="scss">
 .header {
   display: flex;
-  background: #2b2b2b;
+  background: #141414;
   padding: 10px;
 
   button {
-    background: #1b1b1b;
+    background: #2e2e2e;
     border-radius: 2px;
     border: 0;
     padding: 5px 15px;

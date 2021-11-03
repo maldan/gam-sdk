@@ -23,16 +23,18 @@
             }"
             v-for="z in days[i]"
             :key="z"
-            :title="map[moment(z).format('YYYY-MM-DD')]"
+            :title="finalFormat(map[moment(z).format('YYYY-MM-DD')])"
           ></div>
         </div>
       </div>
     </div>
 
     <!-- Info -->
-    <div style="margin-top: 15px; color: #979797">
-      Date: {{ moment(date).format('DD MMM YYYY') }} | Total Month: {{ totalMonth.toFixed(2) }} |
-      Total Year: {{ total.toFixed(2) }} |
+    <div :class="$style.labels">
+      <div><b>Date</b> {{ moment(date).format('DD MMM YYYY') }}</div>
+      <div><b>Day</b> {{ finalFormat(map[moment(date).format('YYYY-MM-DD')]) }}</div>
+      <div><b>Month</b> {{ finalFormat(totalMonth) }}</div>
+      <div><b>Year</b> {{ finalFormat(total) }}</div>
     </div>
 
     <!-- Change year -->
@@ -81,6 +83,9 @@ export default defineComponent({
       default: () => {
         return [];
       },
+    },
+    formatValue: {
+      type: [String, Function],
     },
   },
   components: {},
@@ -186,6 +191,18 @@ export default defineComponent({
         }
       }
     },
+
+    finalFormat(value: number) {
+      if (this.formatValue === 'time') return this.formatAsTime(value);
+      if (typeof this.formatValue === 'function') return this.formatValue(value);
+      return value.toFixed(2);
+    },
+
+    formatAsTime(time: number) {
+      const h = ~~(time / 3600);
+      const m = (time / 60) % 60;
+      return `${h} h ${~~m} m`;
+    },
   },
   data: () => {
     return {
@@ -245,19 +262,38 @@ export default defineComponent({
     }
   }
 
+  .labels {
+    margin-top: 15px;
+    color: #979797;
+    display: flex;
+    margin-bottom: 10px;
+
+    > div {
+      background: #323232;
+      font-size: 14px;
+      border-radius: 4px;
+      padding: 5px 10px;
+      width: max-content;
+      margin-right: 10px;
+
+      b {
+        margin-right: 5px;
+      }
+    }
+  }
+
   .change_year {
-    background: #525252;
+    background: #323232;
     padding: 5px 15px;
     border: 0;
     border-radius: 3px;
-    color: #fefefe;
+    color: #818181;
     font-weight: bold;
-    color: #c5c5c5;
     margin-right: 5px;
 
     &.selected {
-      background: #0075ce;
-      color: #fefefe;
+      background: #025da3;
+      color: #74baf0;
     }
   }
 }
