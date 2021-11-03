@@ -1,12 +1,7 @@
 <template>
   <div :class="$style.input">
     <div v-if="icon" :class="$style.icon">
-      <img
-        :src="require(`../asset/${icon}.svg`)"
-        alt="Settings"
-        draggable="false"
-        style="width: 17px"
-      />
+      <ui-icon :name="icon" :width="17" />
     </div>
     <input
       ref="input"
@@ -18,7 +13,7 @@
 
     <button v-if="functionIcon" :class="$style.icon" @click="clickOnFunction">
       <img
-        :src="require(`../asset/${functionIcon}.svg`)"
+        :src="require(`../asset/icon/${functionIcon}.svg`)"
         alt="Settings"
         draggable="false"
         style="width: 17px"
