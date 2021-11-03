@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.input">
     <div v-if="icon" :class="$style.icon">
-      <ui-icon :name="icon" :width="17" />
+      <ui-icon :name="icon" :width="17" color="#E38414" />
     </div>
     <input
       ref="input"
@@ -11,14 +11,14 @@
       @input="change"
     />
 
-    <button v-if="functionIcon" :class="$style.icon" @click="clickOnFunction">
-      <img
-        :src="require(`../asset/icon/${functionIcon}.svg`)"
-        alt="Settings"
-        draggable="false"
-        style="width: 17px"
-      />
-    </button>
+    <ui-button
+      v-if="functionIcon"
+      :class="$style.icon"
+      @click="clickOnFunction"
+      :icon="functionIcon"
+      iconPosition="center"
+      style="padding: 0"
+    />
   </div>
 </template>
 
@@ -94,7 +94,6 @@ export default defineComponent({
     outline: none;
     font-size: 16px;
     border: 1px solid transparent;
-
     min-width: 0;
 
     &:focus {
@@ -102,7 +101,7 @@ export default defineComponent({
     }
   }
 
-  button {
+  /*button {
     background: #515151;
     color: #9d9d9d;
     border: 0;
@@ -134,6 +133,6 @@ export default defineComponent({
       opacity: 0.6;
       top: 1px;
     }
-  }
+  }*/
 }
 </style>

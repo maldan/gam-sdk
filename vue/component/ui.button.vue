@@ -1,13 +1,7 @@
 <template>
   <button :class="$style.button" :style="style()">
     <div v-if="text" style="margin-right: 15px">{{ text }}</div>
-    <img
-      v-if="icon"
-      :src="require(`../asset/icon/${icon}.svg`)"
-      alt="Add"
-      draggable="false"
-      style="width: 17px"
-    />
+    <ui-icon v-if="icon" :name="icon" :width="17" color="#E38414" :style="iconStyle()" />
   </button>
 </template>
 
@@ -22,6 +16,10 @@ export default defineComponent({
       type: String,
       default: 'normal',
     },
+    iconPosition: {
+      type: String,
+      default: 'left',
+    },
   },
   async mounted() {},
   methods: {
@@ -31,6 +29,15 @@ export default defineComponent({
           padding: '7px 10px',
           fontSize: '14px',
         };
+      }
+      return {};
+    },
+    iconStyle() {
+      if (this.iconPosition === 'left') {
+        return { marginLeft: 'auto' };
+      }
+      if (this.iconPosition === 'center') {
+        return { marginLeft: 'auto', marginRight: 'auto' };
       }
       return {};
     },

@@ -1,31 +1,30 @@
-import Input from './component/ui.input.vue';
-import Button from './component/ui.button.vue';
-import TextArea from './component/ui.textarea.vue';
-import Modal from './component/ui.modal.vue';
-import Select from './component/ui.select.vue';
-import Icon from './component/ui.icon.vue';
-import Header from './component/ui.header.vue';
-import Table from './component/ui.table.vue';
-import Chart from './component/ui.chart.vue';
-import Schedule from './component/ui.schedule.vue';
-
-import ModalApprove from './component/modal/approve.vue';
-import ModalPrompt from './component/modal/prompt.vue';
-
 export default {
   install: (app: any, options: any) => {
-    app.component('ui-input', Input);
-    app.component('ui-button', Button);
-    app.component('ui-textarea', TextArea);
-    app.component('ui-modal', Modal);
-    app.component('ui-select', Select);
-    app.component('ui-icon', Icon);
-    app.component('ui-header', Header);
-    app.component('ui-table', Table);
-    app.component('ui-chart', Chart);
-    app.component('ui-schedule', Schedule);
+    // Register components
+    const components = require.context('./component/', true, /^.*\.vue$/).keys();
+    for (let i = 0; i < components.length; i++) {
+      const name = components[i]
+        .replace('./', '')
+        .replace('.vue', '')
+        .replace(/\//g, '-')
+        .replace(/\./g, '-');
 
-    app.component('modal-approve', ModalApprove);
-    app.component('modal-prompt', ModalPrompt);
+      const sas = require('./component/' + components[i].replace('./', ''));
+      app.component(name, sas.default);
+    }
+
+    // Register modals
+    const modals = require.context('@/component/modal/', true, /^.*\.vue$/).keys();
+    for (let i = 0; i < modals.length; i++) {
+      const name = modals[i]
+        .replace('./', '')
+        .replace('.vue', '')
+        .replace(/\//g, '-')
+        .replace(/\./g, '-')
+        .toLowerCase();
+
+      const sas = require('@/component/modal/' + modals[i].replace('./', ''));
+      app.component(`modal-${name}`, sas.default);
+    }
   },
 };
