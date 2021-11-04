@@ -3,6 +3,8 @@
     ref="svg"
     draggable="false"
     v-html="iconData"
+    width="10"
+    height="10"
     :data-src="require(`../asset/icon/${name}.svg`)"
     :class="$style.icon"
     :style="{ width: `${typeof width === 'string' ? width : width + 'px'}` }"

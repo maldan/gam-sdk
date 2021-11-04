@@ -36,6 +36,14 @@ export default defineComponent({
           fontSize: '14px',
         };
       }
+      if (this.size === 'empty') {
+        return {
+          background: 'none',
+          padding: '0',
+          fontSize: '14px',
+          flex: 'none',
+        };
+      }
       return {};
     },
     iconStyle() {
@@ -56,7 +64,7 @@ export default defineComponent({
 
 <style module lang="scss">
 .button {
-  background: #63636382;
+  background-color: #63636382;
   color: #9d9d9d;
   border: 0;
   padding: 10px 15px;
@@ -72,7 +80,7 @@ export default defineComponent({
   &:disabled {
     opacity: 0.8;
     cursor: not-allowed;
-    background: darken(#515151, 2%);
+    background-color: darken(#515151, 2%);
     color: darken(#9d9d9d, 20%);
 
     &:hover {

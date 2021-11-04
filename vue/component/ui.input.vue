@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.input">
     <div v-if="icon" :class="$style.icon">
-      <ui-icon :name="icon" :width="17" color="#E38414" />
+      <ui-icon :name="icon" :width="17" :color="iconColor" />
     </div>
     <input
       ref="input"
@@ -29,6 +29,10 @@ export default defineComponent({
   props: {
     placeholder: String,
     icon: String,
+    iconColor: {
+      type: String,
+      default: '#E38414',
+    },
     functionIcon: String,
     functionClick: Function,
     modelValue: String,
