@@ -1,7 +1,7 @@
 <template>
-  <div :class="$style.schedule">
+  <div ref="schedule" :class="$style.schedule">
     <!-- Map -->
-    <div :class="$style.year">
+    <div ref="year" :class="$style.year">
       <div :class="$style.month" v-for="(x, i) in month" :key="x">
         <div>{{ x }}</div>
         <div style="display: grid; margin-top: 10px; grid-template-columns: repeat(7, 15px)">
@@ -102,6 +102,7 @@ export default defineComponent({
     this.refresh();
 
     this.keyboardEvent = (e: KeyboardEvent) => {
+      // @ts-ignore
       if (this.$store.state.modal.name) {
         return;
       }
@@ -126,10 +127,24 @@ export default defineComponent({
         this.$emit('select', date);
       }
     };
+
+    this.resizeEvent = (e: any) => {
+      const schedule = this.$refs['schedule'] as HTMLElement;
+      const year = this.$refs['year'] as HTMLElement;
+      const w = schedule.getBoundingClientRect().width;
+
+      year.style.gridTemplateColumns = 'repeat(3, 1fr)';
+      if (w > 600) year.style.gridTemplateColumns = 'repeat(4, 1fr)';
+      if (w > 700) year.style.gridTemplateColumns = 'repeat(6, 1fr)';
+    };
+
     document.addEventListener('keydown', this.keyboardEvent);
+    window.addEventListener('resize', this.resizeEvent);
+    this.resizeEvent();
   },
   beforeUnmount() {
     document.removeEventListener('keydown', this.keyboardEvent);
+    window.removeEventListener('resize', this.resizeEvent);
   },
   methods: {
     moment: Moment,
@@ -191,13 +206,11 @@ export default defineComponent({
         }
       }
     },
-
     finalFormat(value: number) {
       if (this.formatValue === 'time') return this.formatAsTime(value);
       if (typeof this.formatValue === 'function') return this.formatValue(value);
       return value.toFixed(2);
     },
-
     formatAsTime(time: number) {
       const h = ~~(time / 3600);
       const m = (time / 60) % 60;
@@ -211,6 +224,7 @@ export default defineComponent({
       total: 0,
       totalMonth: 0,
       keyboardEvent: null as any,
+      resizeEvent: null as any,
     };
   },
 });
@@ -223,7 +237,7 @@ export default defineComponent({
 
   .year {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 
     .month {

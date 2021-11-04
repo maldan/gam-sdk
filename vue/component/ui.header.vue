@@ -34,9 +34,11 @@ export default defineComponent({
 </script>
 
 <style module lang="scss">
+@import '../style/color.scss';
+
 .header {
   display: flex;
-  background: #141414;
+  background-color: $block-background;
   padding: 10px;
 
   button {
@@ -45,7 +47,7 @@ export default defineComponent({
     border: 0;
     padding: 5px 15px;
     margin-right: 10px;
-    color: #a5a5a5;
+    color: $gray-text;
 
     &.selected {
       background: #d4670b;

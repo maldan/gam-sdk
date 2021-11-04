@@ -30,6 +30,12 @@ export default defineComponent({
           fontSize: '14px',
         };
       }
+      if (this.size === 'compact-square') {
+        return {
+          padding: '5px',
+          fontSize: '14px',
+        };
+      }
       return {};
     },
     iconStyle() {
