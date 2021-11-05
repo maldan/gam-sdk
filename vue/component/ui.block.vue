@@ -11,8 +11,11 @@
       />
     </div>
     <slot v-if="!scrollY" />
-    <div :class="$style.body" v-if="scrollY">
+    <div ref="body" :class="$style.body" v-if="scrollY">
       <slot />
+    </div>
+    <div v-if="scrollY && scrollChangedTimer > 0" :class="$style.scroll_info">
+      {{ ~~(scrollPercentage * 100) }} %
     </div>
   </div>
 </template>
@@ -26,10 +29,36 @@ export default defineComponent({
     icon: String,
     scrollY: Boolean,
   },
-  async mounted() {},
+  async mounted() {
+    let scrollChangedTimer = 0;
+    let scrollPercentage = 0;
+
+    const body = this.$refs['body'] as HTMLElement;
+    if (body) {
+      body.onscroll = (e: any) => {
+        scrollChangedTimer = 1;
+      };
+
+      this.timerId2 = setInterval(() => {
+        scrollChangedTimer -= 0.1;
+        scrollPercentage = body.scrollTop / (body.scrollHeight - body.clientHeight);
+
+        this.scrollChangedTimer = scrollChangedTimer;
+        this.scrollPercentage = scrollPercentage;
+      }, 100);
+    }
+  },
+  beforeUnmount() {
+    clearInterval(this.timerId2);
+  },
   methods: {},
   data: () => {
-    return {};
+    return {
+      scrollPercentage: 0,
+      scrollChangedTimer: 0,
+      timerId: 0,
+      timerId2: 0,
+    };
   },
 });
 </script>
@@ -47,6 +76,7 @@ export default defineComponent({
   padding: $gap-base;
   background-color: $gray-dark;
   border-radius: 4px;
+  position: relative;
 
   .title {
     color: $text-gray;
@@ -65,10 +95,21 @@ export default defineComponent({
   .body {
     overflow-y: scroll;
     height: calc(100% - 30px);
+    position: relative;
 
     &::-webkit-scrollbar {
       width: 0;
     }
+  }
+
+  .scroll_info {
+    background-color: $gray-dark;
+    color: $text-gray;
+    padding: 5px 10px;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    border-radius: 4px;
   }
 }
 </style>
