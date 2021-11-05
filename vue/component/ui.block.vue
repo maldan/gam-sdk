@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.block">
+  <div :class="scrollY ? $style.block_scroll : $style.block">
     <div v-if="title" :class="$style.title">
       {{ title }}
       <ui-button
@@ -10,7 +10,10 @@
         @click="$emit('iconClick')"
       />
     </div>
-    <slot />
+    <slot v-if="!scrollY" />
+    <div :class="$style.body" v-if="scrollY">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -21,6 +24,7 @@ export default defineComponent({
   props: {
     title: String,
     icon: String,
+    scrollY: Boolean,
   },
   async mounted() {},
   methods: {},
@@ -35,9 +39,13 @@ export default defineComponent({
 @import '../style/size.scss';
 
 .block {
+  height: max-content;
+}
+
+.block,
+.block_scroll {
   padding: $gap-base;
   background-color: $gray-dark;
-  height: max-content;
   border-radius: 4px;
 
   .title {
@@ -51,6 +59,15 @@ export default defineComponent({
     .button {
       margin-left: auto;
       flex: none;
+    }
+  }
+
+  .body {
+    overflow-y: scroll;
+    height: calc(100% - 30px);
+
+    &::-webkit-scrollbar {
+      width: 0;
     }
   }
 }

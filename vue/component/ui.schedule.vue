@@ -38,7 +38,7 @@
     </div>
 
     <!-- Change year -->
-    <div style="margin-top: 5px">
+    <div>
       <button
         v-for="x in yearRange"
         :class="[
@@ -231,6 +231,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
+@import '../style/color.scss';
+@import '../style/size.scss';
+
 .schedule {
   display: flex;
   flex-direction: column;
@@ -238,7 +241,7 @@ export default defineComponent({
   .year {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: $gap-base;
 
     .month {
       flex: 1;
@@ -277,10 +280,10 @@ export default defineComponent({
   }
 
   .labels {
-    margin-top: 15px;
+    margin-top: $gap-base;
     color: #979797;
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: $gap-base;
 
     > div {
       background: #323232;
@@ -288,7 +291,7 @@ export default defineComponent({
       border-radius: 4px;
       padding: 5px 10px;
       width: max-content;
-      margin-right: 10px;
+      margin-right: $gap-base;
 
       b {
         margin-right: 5px;
@@ -303,7 +306,7 @@ export default defineComponent({
     border-radius: 3px;
     color: #818181;
     font-weight: bold;
-    margin-right: 5px;
+    margin-right: $gap-base;
 
     &.selected {
       background: #025da3;
