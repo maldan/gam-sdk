@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.input">
     <div v-if="icon" :class="$style.icon">
-      <ui-icon :name="icon" :width="17" :color="iconColor" />
+      <ui-icon :name="icon" :width="24" :color="iconColor" />
     </div>
     <input
       ref="input"

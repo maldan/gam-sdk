@@ -3,8 +3,8 @@
     ref="svg"
     draggable="false"
     v-html="iconData"
-    width="10"
-    height="10"
+    width="24"
+    height="24"
     :data-src="require(`../asset/icon/${name}.svg`)"
     :class="$style.icon"
     :style="{ width: `${typeof width === 'string' ? width : width + 'px'}` }"
@@ -38,6 +38,7 @@ export default defineComponent({
       dd.innerHTML = svgArgs[0] + '</svg>';
       const attr = dd.children[0].attributes;
       for (let i = 0; i < attr.length; i++) {
+        if (attr[i].name === 'fill') continue;
         svg.setAttribute(attr[i].name, attr[i].value);
       }
     }

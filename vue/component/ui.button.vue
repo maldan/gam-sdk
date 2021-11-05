@@ -1,7 +1,7 @@
 <template>
   <button :class="$style.button" :style="style()">
     <div v-if="text" style="margin-right: 15px">{{ text }}</div>
-    <ui-icon v-if="icon" :name="icon" :width="17" color="#E38414" :style="iconStyle()" />
+    <ui-icon v-if="icon" :name="icon" :width="24" color="#E38414" :style="iconStyle()" />
   </button>
 </template>
 
