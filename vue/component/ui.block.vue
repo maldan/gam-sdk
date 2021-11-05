@@ -32,16 +32,17 @@ export default defineComponent({
 
 <style module lang="scss">
 @import '../style/color.scss';
+@import '../style/size.scss';
 
 .block {
-  padding: 10px;
-  background-color: $block-background;
+  padding: $main-gap-size;
+  background-color: $gray-dark;
   height: max-content;
   border-radius: 4px;
 
   .title {
-    color: $gray-text;
-    margin-bottom: 15px;
+    color: $text-gray;
+    margin-bottom: $main-gap-size;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 14px;

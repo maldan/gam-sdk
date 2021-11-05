@@ -38,7 +38,7 @@ export default defineComponent({
 
 .header {
   display: flex;
-  background-color: $block-background;
+  background-color: $gray-dark;
   padding: 10px;
 
   button {
@@ -47,7 +47,7 @@ export default defineComponent({
     border: 0;
     padding: 5px 15px;
     margin-right: 10px;
-    color: $gray-text;
+    color: $text-gray;
 
     &.selected {
       background: #d4670b;

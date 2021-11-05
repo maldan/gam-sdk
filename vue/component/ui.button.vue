@@ -32,7 +32,7 @@ export default defineComponent({
       }
       if (this.size === 'compact-square') {
         return {
-          padding: '5px',
+          padding: '2px',
           fontSize: '14px',
         };
       }
@@ -63,9 +63,12 @@ export default defineComponent({
 </script>
 
 <style module lang="scss">
+@import '../style/color.scss';
+@import '../style/size.scss';
+
 .button {
-  background-color: #63636382;
-  color: #9d9d9d;
+  background-color: $gray-light;
+  color: $text-gray;
   border: 0;
   padding: 10px 15px;
   border-radius: 4px;
@@ -80,8 +83,8 @@ export default defineComponent({
   &:disabled {
     opacity: 0.8;
     cursor: not-allowed;
-    background-color: darken(#515151, 2%);
-    color: darken(#9d9d9d, 20%);
+    background-color: darken($gray-light, 2%);
+    color: darken($text-gray, 20%);
 
     &:hover {
       opacity: 0.7;

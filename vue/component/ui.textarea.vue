@@ -25,6 +25,9 @@ export default defineComponent({
 </script>
 
 <style module lang="scss">
+@import '../style/color.scss';
+@import '../style/size.scss';
+
 .textarea {
   display: flex;
   align-items: center;
@@ -33,7 +36,7 @@ export default defineComponent({
 
   textarea {
     box-sizing: border-box;
-    background: #3d3d3d;
+    background: $gray-light;
     color: #9d9d9d;
     border: 0;
     padding: 10px;

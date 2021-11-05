@@ -59,6 +59,9 @@ export default defineComponent({
 </script>
 
 <style module lang="scss">
+@import '../style/color.scss';
+@import '../style/size.scss';
+
 .input {
   display: flex;
   align-items: center;
@@ -67,14 +70,14 @@ export default defineComponent({
 
   .icon {
     flex: none;
-    background: #63636382;
+    background: $gray-very-light;
     height: 40px;
     width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 4px 0 0 4px;
-    border-right: 1px solid #313131;
+    border-right: 1px solid $gray-medium;
     box-sizing: border-box;
 
     img {
@@ -84,14 +87,14 @@ export default defineComponent({
     &:last-child {
       border: 0;
       border-radius: 0 4px 4px 0;
-      border-left: 1px solid #313131;
+      border-left: 1px solid $gray-medium;
     }
   }
 
   input {
     box-sizing: border-box;
-    background: #46464682;
-    color: #9d9d9d;
+    background: $gray-light;
+    color: $text-gray;
     border: 0;
     padding: 10px;
     flex: 1;
@@ -101,7 +104,7 @@ export default defineComponent({
     min-width: 0;
 
     &:focus {
-      border: 1px solid #888888;
+      border: 1px solid $text-gray;
     }
   }
 

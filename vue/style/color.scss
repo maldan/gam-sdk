@@ -1,2 +1,8 @@
-$block-background: #141414;
-$gray-text: #979797;
+$gray-dark: #141414;
+$gray-medium: lighten($gray-dark, 8%);
+$gray-light: lighten($gray-dark, 16%);
+$gray-very-light: lighten($gray-dark, 22%);
+
+$text-gray: #979797;
+
+$orange: #d4670b;

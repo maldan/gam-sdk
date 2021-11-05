@@ -21,6 +21,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
+@import '../style/color.scss';
+@import '../style/size.scss';
+
 .modal {
   width: 100%;
   height: 100%;
@@ -36,8 +39,8 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #222222;
-    color: #cacaca;
+    background: $gray-medium;
+    color: $text-gray;
     padding: 10px;
   }
 }
