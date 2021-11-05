@@ -35,14 +35,14 @@ export default defineComponent({
 @import '../style/size.scss';
 
 .block {
-  padding: $main-gap-size;
+  padding: $gap-base;
   background-color: $gray-dark;
   height: max-content;
   border-radius: 4px;
 
   .title {
     color: $text-gray;
-    margin-bottom: $main-gap-size;
+    margin-bottom: $gap-base;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 14px;
