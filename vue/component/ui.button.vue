@@ -102,11 +102,6 @@ export default defineComponent({
     }
   }
 
-  img {
-    display: block;
-    margin-left: auto;
-  }
-
   &:hover {
     opacity: 0.7;
   }
