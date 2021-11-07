@@ -1,7 +1,20 @@
 <template>
-  <button :class="$style.button" :style="style()">
-    <div v-if="text" style="margin-right: 15px">{{ text }}</div>
-    <ui-icon v-if="icon" :name="icon" :width="24" color="#E38414" :style="iconStyle()" />
+  <button :class="[$style.button, $style[`icon_` + iconPosition]]">
+    <ui-icon
+      v-if="icon && iconPosition === 'left'"
+      :class="$style.icon"
+      :name="icon"
+      :width="24"
+      :color="iconColor"
+    />
+    <div :class="$style.text" v-if="text">{{ text }}</div>
+    <ui-icon
+      v-if="icon && iconPosition === 'right'"
+      :class="$style.icon"
+      :name="icon"
+      :width="24"
+      :color="iconColor"
+    />
   </button>
 </template>
 
@@ -18,12 +31,16 @@ export default defineComponent({
     },
     iconPosition: {
       type: String,
-      default: 'left',
+      default: 'right',
+    },
+    iconColor: {
+      type: String,
+      default: '#E38414',
     },
   },
   async mounted() {},
   methods: {
-    style() {
+    /*style() {
       if (this.size === 'compact') {
         return {
           padding: '7px 10px',
@@ -34,6 +51,12 @@ export default defineComponent({
         return {
           padding: '2px',
           fontSize: '14px',
+          borderRadius: '0',
+        };
+      }
+      if (this.size === 'square') {
+        return {
+          borderRadius: '0',
         };
       }
       if (this.size === 'empty') {
@@ -45,16 +68,16 @@ export default defineComponent({
         };
       }
       return {};
-    },
-    iconStyle() {
-      if (this.iconPosition === 'left') {
+    },*/
+    /*iconStyle() {
+      if (this.iconPosition === 'right') {
         return { marginLeft: 'auto' };
       }
       if (this.iconPosition === 'center') {
         return { marginLeft: 'auto', marginRight: 'auto' };
       }
       return {};
-    },
+    },*/
   },
   data: () => {
     return {};
@@ -70,7 +93,7 @@ export default defineComponent({
   background-color: $gray-light;
   color: $text-gray;
   border: 0;
-  padding: 10px 15px;
+  padding: $gap-base;
   border-radius: 4px;
   flex: 1;
   font-weight: bold;
@@ -80,25 +103,35 @@ export default defineComponent({
   display: flex;
   align-items: center;
 
+  &.icon_left {
+    .text {
+      margin-left: $gap-base;
+    }
+  }
+
+  &.icon_right {
+    .text {
+      margin-right: $gap-base;
+    }
+  }
+
   &:disabled {
-    opacity: 0.8;
+    opacity: 0.5;
     cursor: not-allowed;
-    background-color: darken($gray-light, 2%);
-    color: darken($text-gray, 20%);
 
     &:hover {
-      opacity: 0.7;
+      opacity: 0.5;
     }
 
     &:active {
       position: relative;
-      opacity: 0.6;
-      top: 1px;
+      opacity: 0.5;
+      top: 0;
     }
 
-    img {
+    .icon {
       filter: grayscale(2);
-      opacity: 0.4;
+      opacity: 0.5;
     }
   }
 

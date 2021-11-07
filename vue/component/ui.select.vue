@@ -1,12 +1,7 @@
 <template>
   <div :class="$style.select">
     <div v-if="icon" :class="$style.icon">
-      <img
-        :src="require(`../asset/icon/${icon}.svg`)"
-        alt="Settings"
-        draggable="false"
-        style="width: 17px"
-      />
+      <ui-icon :name="icon" :width="24" :color="iconColor" />
     </div>
 
     <input
@@ -16,14 +11,9 @@
       :value="modelValue ? modelValue.label : ''"
     />
 
-    <button @click="isOpen = !isOpen" :class="$style.icon">
-      <img
-        src="../asset/icon/arrow_down.svg"
-        alt="Settings"
-        draggable="false"
-        style="width: 17px"
-      />
-    </button>
+    <div @click="isOpen = !isOpen" :class="$style.icon">
+      <ui-icon name="arrow_down" :width="24" :color="iconColor" />
+    </div>
 
     <div v-if="isOpen" :class="$style.item_list">
       <div
@@ -47,6 +37,10 @@ export default defineComponent({
     icon: String,
     items: Array,
     modelValue: String,
+    iconColor: {
+      type: String,
+      default: '#E38414',
+    },
   },
   async mounted() {
     console.log(this.items);
