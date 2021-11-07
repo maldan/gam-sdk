@@ -2,13 +2,7 @@
   <div :class="scrollY ? $style.block_scroll : $style.block">
     <div v-if="title" :class="$style.title">
       {{ title }}
-      <ui-button
-        v-if="icon"
-        :class="$style.button"
-        :icon="icon"
-        size="compact-square"
-        @click="$emit('iconClick')"
-      />
+      <ui-button v-if="icon" :class="$style.button" :icon="icon" @click="$emit('iconClick')" />
     </div>
     <slot v-if="!scrollY" />
     <div ref="body" :class="$style.body" v-if="scrollY">
@@ -89,6 +83,9 @@ export default defineComponent({
     .button {
       margin-left: auto;
       flex: none;
+      width: 24px;
+      height: 24px;
+      padding: 0;
     }
   }
 
