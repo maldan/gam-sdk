@@ -113,6 +113,9 @@ export default defineComponent({
     .text {
       margin-right: $gap-base;
     }
+    .icon {
+      margin-left: auto;
+    }
   }
 
   &:disabled {

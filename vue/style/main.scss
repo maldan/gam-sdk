@@ -71,6 +71,18 @@ button {
   }
 }
 
+.div_group {
+  display: flex;
+
+  > div {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
 .button_blue {
   @include base_button(#2d88ff, #fefefe, 5px 10px, 2px);
 }
