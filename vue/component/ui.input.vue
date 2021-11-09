@@ -1,8 +1,15 @@
 <template>
   <div :class="$style.input">
-    <div v-if="icon" :class="$style.icon">
-      <ui-icon :name="icon" :width="24" :color="iconColor" />
-    </div>
+    <ui-button
+      v-if="icon"
+      :class="$style.button"
+      :icon="icon"
+      :width="24"
+      :iconColor="iconColor"
+      iconPosition="center"
+    />
+
+    <!-- Text -->
     <input
       v-if="isEditAsText || (type !== 'date' && type !== 'datetime')"
       ref="input"
@@ -13,7 +20,7 @@
       @input="change"
     />
 
-    <!-- date= -->
+    <!-- Date -->
     <div v-if="type === 'date' && !isEditAsText" :class="$style.input_field_date">
       <div :class="$style.part">
         <div
@@ -27,10 +34,15 @@
         </div>
       </div>
 
-      <ui-button @click="isEditAsText = true" icon="pencil" size="empty" style="margin-left: 5px" />
+      <ui-button
+        :class="$style.button_empty"
+        @click="isEditAsText = true"
+        icon="pencil"
+        style="margin-left: 5px"
+      />
     </div>
 
-    <!-- datetime -->
+    <!-- Date Time -->
     <div v-if="type === 'datetime' && !isEditAsText" :class="$style.input_field_datetime">
       <div :class="$style.part">
         <div
@@ -56,16 +68,21 @@
         </div>
       </div>
 
-      <ui-button @click="isEditAsText = true" icon="pencil" size="empty" style="margin-left: 5px" />
+      <ui-button
+        :class="$style.button_empty"
+        @click="isEditAsText = true"
+        icon="pencil"
+        style="margin-left: 5px"
+      />
     </div>
 
     <ui-button
       v-if="functionIcon"
-      :class="$style.icon"
+      :class="$style.button"
       @click="clickOnFunction"
       :icon="functionIcon"
+      :width="24"
       iconPosition="center"
-      style="padding: 0"
     />
   </div>
 </template>
@@ -220,7 +237,7 @@ export default defineComponent({
   flex: 1;
   box-sizing: border-box;
 
-  .icon {
+  .button {
     flex: none;
     background: $gray-very-light;
     height: 40px;
@@ -231,16 +248,18 @@ export default defineComponent({
     border-radius: 4px 0 0 4px;
     border-right: 1px solid $gray-medium;
     box-sizing: border-box;
-
-    img {
-      display: block;
-    }
+    padding: 2px;
 
     &:last-child {
       border: 0;
       border-radius: 0 4px 4px 0;
       border-left: 1px solid $gray-medium;
     }
+  }
+
+  .button_empty {
+    padding: 2px;
+    background: none;
   }
 
   .input_field,

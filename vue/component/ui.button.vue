@@ -7,7 +7,16 @@
       :width="24"
       :color="iconColor"
     />
-    <div :class="$style.text" v-if="text">{{ text }}</div>
+    <div :class="$style.text" v-if="text && iconPosition !== 'center'">{{ text }}</div>
+
+    <ui-icon
+      v-if="icon && iconPosition === 'center'"
+      :class="$style.icon"
+      :name="icon"
+      :width="24"
+      :color="iconColor"
+    />
+
     <ui-icon
       v-if="icon && iconPosition === 'right'"
       :class="$style.icon"
@@ -25,10 +34,10 @@ export default defineComponent({
   props: {
     text: String,
     icon: String,
-    size: {
+    /*size: {
       type: String,
       default: 'normal',
-    },
+    },*/
     iconPosition: {
       type: String,
       default: 'right',
