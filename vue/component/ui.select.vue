@@ -1,9 +1,11 @@
 <template>
   <div :class="$style.select">
+    <!-- Left icon -->
     <div v-if="icon" :class="$style.icon">
       <ui-icon :name="icon" :width="24" :color="iconColor" />
     </div>
 
+    <!-- Input -->
     <input
       type="text"
       :class="$style.input"
@@ -11,13 +13,21 @@
       :value="modelValue ? modelValue.label : ''"
     />
 
-    <div @click="isOpen = !isOpen" :class="$style.icon">
-      <ui-icon name="arrow_down" :width="24" :color="iconColor" />
-    </div>
+    <!-- Right icon -->
+    <ui-button
+      @click="isOpen = !isOpen"
+      icon="arrow_down"
+      :color="iconColor"
+      :class="$style.button"
+    />
 
+    <!-- Menu -->
     <div v-if="isOpen" :class="$style.item_list">
       <div
-        @click="select(x, i), (isOpen = false)"
+        @click="
+          select(x, i);
+          isOpen = false;
+        "
         :class="$style.item"
         :key="x.label"
         v-for="(x, i) in items"
@@ -36,17 +46,15 @@ export default defineComponent({
     placeholder: String,
     icon: String,
     items: Array,
-    modelValue: String,
+    modelValue: Object,
     iconColor: {
       type: String,
       default: '#E38414',
     },
   },
-  async mounted() {
-    console.log(this.items);
-  },
+  async mounted() {},
   methods: {
-    select(x: any, index: number) {
+    select(x: Record<string, unknown>, index: number) {
       this.$emit('update:modelValue', x);
       this.$emit('change', { ...x, index });
     },
@@ -83,17 +91,25 @@ export default defineComponent({
     }
   }
 
-  .icon {
+  .button {
+    padding: 7px;
+    width: 42px;
+    flex: none;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /*.icon {
     flex: none;
     background: #515151;
-    height: 40px;
-    width: 40px;
+    //height: 40px;
+    //width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 2px 0 0 2px;
     border-right: 1px solid #313131;
     box-sizing: border-box;
+    cursor: pointer;
 
     img {
       display: block;
@@ -104,16 +120,14 @@ export default defineComponent({
       border-radius: 0 2px 2px 0;
       border-left: 1px solid #313131;
     }
-  }
+  }*/
 
   .input {
     box-sizing: border-box;
     background: #3d3d3d;
     color: #9d9d9d;
-    border: 0;
     padding: 10px;
-    flex: none;
-    width: calc(100% - 40px - 40px);
+    flex: 1;
     outline: none;
     font-size: 16px;
     border: 1px solid transparent;
@@ -123,7 +137,7 @@ export default defineComponent({
     }
   }
 
-  button {
+  /*button {
     background: #515151;
     color: #9d9d9d;
     border: 0;
@@ -155,6 +169,6 @@ export default defineComponent({
       opacity: 0.6;
       top: 1px;
     }
-  }
+  }*/
 }
 </style>

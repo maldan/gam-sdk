@@ -101,7 +101,7 @@ export default defineComponent({
 .button {
   background-color: $gray-light;
   color: $text-gray;
-  border: 0;
+  border: 1px solid transparent;
   padding: $gap-base;
   border-radius: 4px;
   flex: 1;
