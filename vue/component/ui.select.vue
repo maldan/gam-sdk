@@ -1,9 +1,7 @@
 <template>
   <div :class="$style.select">
     <!-- Left icon -->
-    <div v-if="icon" :class="$style.icon">
-      <ui-icon :name="icon" :width="24" :color="iconColor" />
-    </div>
+    <ui-button v-if="icon" :icon="icon" :width="24" :color="iconColor" :class="$style.button" />
 
     <!-- Input -->
     <input
