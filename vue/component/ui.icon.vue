@@ -31,8 +31,14 @@ export default defineComponent({
   async mounted() {
     const svg = this.$refs['svg'] as HTMLElement;
     const url = svg.getAttribute('data-src') as string;
-    let icon = (await Axios.get(url)).data;
+    const cacheIcon = localStorage.getItem(`__icon_${url}`);
+
+    let icon = cacheIcon ?? (await Axios.get(url)).data;
     const svgArgs = icon.match(/<svg (.*?)>/g);
+
+    // Save cache
+    localStorage.setItem(`__icon_${url}`, icon);
+
     if (svgArgs) {
       const dd = document.createElement('div');
       dd.innerHTML = svgArgs[0] + '</svg>';
