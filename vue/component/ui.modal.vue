@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.modal">
+  <div :class="$style.modal" @click.stop="">
     <div :class="$style.window">
       <slot />
     </div>

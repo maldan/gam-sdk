@@ -1,7 +1,10 @@
 <template>
   <div :class="$style.menu">
     <ui-button
-      @click="x.onClick"
+      @click.stop="
+        x.onClick();
+        $emit('close');
+      "
       v-for="x in items"
       :key="x"
       iconPosition="left"
