@@ -4,7 +4,8 @@
       v-if="icon && iconPosition === 'left'"
       :class="$style.icon"
       :name="icon"
-      :width="24"
+      :width="iconSize"
+      :height="iconSize"
       :color="iconColor"
     />
     <div :class="$style.text" v-if="text && iconPosition !== 'center'">{{ text }}</div>
@@ -13,7 +14,8 @@
       v-if="icon && iconPosition === 'center'"
       :class="$style.icon"
       :name="icon"
-      :width="24"
+      :width="iconSize"
+      :height="iconSize"
       :color="iconColor"
     />
 
@@ -21,7 +23,8 @@
       v-if="icon && iconPosition === 'right'"
       :class="$style.icon"
       :name="icon"
-      :width="24"
+      :width="iconSize"
+      :height="iconSize"
       :color="iconColor"
     />
   </button>
@@ -34,10 +37,6 @@ export default defineComponent({
   props: {
     text: String,
     icon: String,
-    /*size: {
-      type: String,
-      default: 'normal',
-    },*/
     iconPosition: {
       type: String,
       default: 'right',
@@ -45,6 +44,10 @@ export default defineComponent({
     iconColor: {
       type: String,
       default: '#E38414',
+    },
+    iconSize: {
+      type: Number,
+      default: 24,
     },
   },
   async mounted() {},
