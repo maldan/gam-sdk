@@ -71,6 +71,21 @@ button {
   }
 }
 
+.button_group_round_compact {
+  display: flex;
+
+  button:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+  button {
+    border-radius: 0;
+    margin-right: 1px;
+  }
+  button:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+}
+
 .div_group {
   display: flex;
 

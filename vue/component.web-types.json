@@ -1,0 +1,39 @@
+{
+    "framework": "vue",
+    "name": "vue",
+    "version": "3.2.0",
+    "js-types-syntax": "typescript",
+    "description-markup": "markdown",
+    "framework-config": {
+        "enable-when": {
+            "file-extensions": [
+                "vue"
+            ]
+        }
+    },
+    "contributions": {
+        "html": {
+            "elements": [
+                {
+                    "name": "ui-button",
+                    "description": "Vue UI Component Button",
+                    "attributes": [
+                        {
+                            "name": "icon",
+                            "description": "Icon Name",
+                            "value": {
+                                "type": "enum",
+                                "kind": "plain"
+                            },
+                            "values": {
+                                "pattern": {
+                                    "items": "html/icons"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
