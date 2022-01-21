@@ -7,7 +7,10 @@
     height="24"
     :data-src="require(`../asset/icon/${name}.svg`)"
     :class="$style.icon"
-    :style="{ width: `${typeof width === 'string' ? width : width + 'px'}` }"
+    :style="{
+      width: `${typeof width === 'string' ? width : width + 'px'}`,
+      height: `${typeof height === 'string' ? height : height + 'px'}`,
+    }"
     :color="color"
   ></svg>
 </template>
@@ -20,6 +23,10 @@ export default defineComponent({
   props: {
     name: String,
     width: {
+      type: [String, Number],
+      default: 'auto',
+    },
+    height: {
       type: [String, Number],
       default: 'auto',
     },
