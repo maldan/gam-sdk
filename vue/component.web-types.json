@@ -1,7 +1,7 @@
 {
     "framework": "vue",
-    "name": "vue",
-    "version": "3.2.0",
+    "name": "VUI UI",
+    "version": "0.0.1",
     "js-types-syntax": "typescript",
     "description-markup": "markdown",
     "framework-config": {
@@ -15,8 +15,18 @@
         "html": {
             "elements": [
                 {
+                    "name": "ui-block",
+                    "description": "Vue UI Component ui-block",
+                    "attributes": []
+                },
+                {
+                    "name": "ui-button-group",
+                    "description": "Vue UI Component ui-button-group",
+                    "attributes": []
+                },
+                {
                     "name": "ui-button",
-                    "description": "Vue UI Component Button",
+                    "description": "Vue UI Component ui-button",
                     "attributes": [
                         {
                             "name": "icon",
@@ -32,6 +42,225 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "ui-chart",
+                    "description": "Vue UI Component ui-chart",
+                    "attributes": []
+                },
+                {
+                    "name": "ui-context-menu",
+                    "description": "Vue UI Component ui-context-menu",
+                    "attributes": []
+                },
+                {
+                    "name": "ui-header",
+                    "description": "Vue UI Component ui-header",
+                    "attributes": []
+                },
+                {
+                    "name": "ui-icon",
+                    "description": "Vue UI Component ui-icon",
+                    "attributes": [
+                        {
+                            "name": "name",
+                            "description": "Icon Name",
+                            "value": {
+                                "type": "enum",
+                                "kind": "plain"
+                            },
+                            "values": {
+                                "pattern": {
+                                    "items": "html/icons"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ui-input",
+                    "description": "Vue UI Component ui-input",
+                    "attributes": []
+                },
+                {
+                    "name": "ui-modal-view",
+                    "description": "Vue UI Component ui-modal-view",
+                    "attributes": []
+                },
+                {
+                    "name": "ui-modal",
+                    "description": "Vue UI Component ui-modal",
+                    "attributes": []
+                },
+                {
+                    "name": "ui-schedule",
+                    "description": "Vue UI Component ui-schedule",
+                    "attributes": []
+                },
+                {
+                    "name": "ui-select",
+                    "description": "Vue UI Component ui-select",
+                    "attributes": []
+                },
+                {
+                    "name": "ui-table",
+                    "description": "Vue UI Component ui-table",
+                    "attributes": []
+                },
+                {
+                    "name": "ui-textarea",
+                    "description": "Vue UI Component ui-textarea",
+                    "attributes": []
+                }
+            ],
+            "icons": [
+                {
+                    "name": "angle_bracket_left",
+                    "icon": "./asset/icon/angle_bracket_left.svg"
+                },
+                {
+                    "name": "angle_bracket_right",
+                    "icon": "./asset/icon/angle_bracket_right.svg"
+                },
+                {
+                    "name": "arrow_down",
+                    "icon": "./asset/icon/arrow_down.svg"
+                },
+                {
+                    "name": "arrow_down_small",
+                    "icon": "./asset/icon/arrow_down_small.svg"
+                },
+                {
+                    "name": "arrow_left_small",
+                    "icon": "./asset/icon/arrow_left_small.svg"
+                },
+                {
+                    "name": "arrow_right_small",
+                    "icon": "./asset/icon/arrow_right_small.svg"
+                },
+                {
+                    "name": "arrow_up",
+                    "icon": "./asset/icon/arrow_up.svg"
+                },
+                {
+                    "name": "calendar",
+                    "icon": "./asset/icon/calendar.svg"
+                },
+                {
+                    "name": "check",
+                    "icon": "./asset/icon/check.svg"
+                },
+                {
+                    "name": "circle_filled",
+                    "icon": "./asset/icon/circle_filled.svg"
+                },
+                {
+                    "name": "close",
+                    "icon": "./asset/icon/close.svg"
+                },
+                {
+                    "name": "control_panel",
+                    "icon": "./asset/icon/control_panel.svg"
+                },
+                {
+                    "name": "copy",
+                    "icon": "./asset/icon/copy.svg"
+                },
+                {
+                    "name": "distance",
+                    "icon": "./asset/icon/distance.svg"
+                },
+                {
+                    "name": "eye",
+                    "icon": "./asset/icon/eye.svg"
+                },
+                {
+                    "name": "file",
+                    "icon": "./asset/icon/file.svg"
+                },
+                {
+                    "name": "folder",
+                    "icon": "./asset/icon/folder.svg"
+                },
+                {
+                    "name": "full_screen",
+                    "icon": "./asset/icon/full_screen.svg"
+                },
+                {
+                    "name": "gear",
+                    "icon": "./asset/icon/gear.svg"
+                },
+                {
+                    "name": "info",
+                    "icon": "./asset/icon/info.svg"
+                },
+                {
+                    "name": "left_screen",
+                    "icon": "./asset/icon/left_screen.svg"
+                },
+                {
+                    "name": "list",
+                    "icon": "./asset/icon/list.svg"
+                },
+                {
+                    "name": "maximize",
+                    "icon": "./asset/icon/maximize.svg"
+                },
+                {
+                    "name": "minimize",
+                    "icon": "./asset/icon/minimize.svg"
+                },
+                {
+                    "name": "not_allowed",
+                    "icon": "./asset/icon/not_allowed.svg"
+                },
+                {
+                    "name": "paste",
+                    "icon": "./asset/icon/paste.svg"
+                },
+                {
+                    "name": "pencil",
+                    "icon": "./asset/icon/pencil.svg"
+                },
+                {
+                    "name": "play",
+                    "icon": "./asset/icon/play.svg"
+                },
+                {
+                    "name": "plus",
+                    "icon": "./asset/icon/plus.svg"
+                },
+                {
+                    "name": "rename",
+                    "icon": "./asset/icon/rename.svg"
+                },
+                {
+                    "name": "right_screen",
+                    "icon": "./asset/icon/right_screen.svg"
+                },
+                {
+                    "name": "scissors",
+                    "icon": "./asset/icon/scissors.svg"
+                },
+                {
+                    "name": "search",
+                    "icon": "./asset/icon/search.svg"
+                },
+                {
+                    "name": "stopwatch",
+                    "icon": "./asset/icon/stopwatch.svg"
+                },
+                {
+                    "name": "title",
+                    "icon": "./asset/icon/title.svg"
+                },
+                {
+                    "name": "trash",
+                    "icon": "./asset/icon/trash.svg"
+                },
+                {
+                    "name": "upload",
+                    "icon": "./asset/icon/upload.svg"
                 }
             ]
         }

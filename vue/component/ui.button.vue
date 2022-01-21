@@ -1,12 +1,18 @@
 <template>
-  <button :class="[$style.button, $style[`icon_` + iconPosition]]">
+  <button
+    :class="[
+      $style.button,
+      $style[`icon_` + (icon ? iconPosition : 'none')],
+      isSelected ? $style['selected'] : null,
+    ]"
+  >
     <ui-icon
       v-if="icon && iconPosition === 'left'"
       :class="$style.icon"
       :name="icon"
       :width="iconSize"
       :height="iconSize"
-      :color="iconColor"
+      :color="isSelected ? iconColorSelected : iconColor"
     />
     <div :class="$style.text" v-if="text && iconPosition !== 'center'">{{ text }}</div>
 
@@ -16,7 +22,7 @@
       :name="icon"
       :width="iconSize"
       :height="iconSize"
-      :color="iconColor"
+      :color="isSelected ? iconColorSelected : iconColor"
     />
 
     <ui-icon
@@ -25,7 +31,7 @@
       :name="icon"
       :width="iconSize"
       :height="iconSize"
-      :color="iconColor"
+      :color="isSelected ? iconColorSelected : iconColor"
     />
   </button>
 </template>
@@ -37,6 +43,7 @@ export default defineComponent({
   props: {
     text: String,
     icon: String,
+    isSelected: Boolean,
     iconPosition: {
       type: String,
       default: 'right',
@@ -45,52 +52,17 @@ export default defineComponent({
       type: String,
       default: '#E38414',
     },
+    iconColorSelected: {
+      type: String,
+      default: '#FEFEFE',
+    },
     iconSize: {
       type: Number,
       default: 24,
     },
   },
   async mounted() {},
-  methods: {
-    /*style() {
-      if (this.size === 'compact') {
-        return {
-          padding: '7px 10px',
-          fontSize: '14px',
-        };
-      }
-      if (this.size === 'compact-square') {
-        return {
-          padding: '2px',
-          fontSize: '14px',
-          borderRadius: '0',
-        };
-      }
-      if (this.size === 'square') {
-        return {
-          borderRadius: '0',
-        };
-      }
-      if (this.size === 'empty') {
-        return {
-          background: 'none',
-          padding: '0',
-          fontSize: '14px',
-          flex: 'none',
-        };
-      }
-      return {};
-    },*/
-    /*iconStyle() {
-      if (this.iconPosition === 'right') {
-        return { marginLeft: 'auto' };
-      }
-      if (this.iconPosition === 'center') {
-        return { marginLeft: 'auto', marginRight: 'auto' };
-      }
-      return {};
-    },*/
-  },
+  methods: {},
   data: () => {
     return {};
   },
@@ -114,6 +86,11 @@ export default defineComponent({
   user-select: none;
   display: flex;
   align-items: center;
+
+  &.selected {
+    background-color: #2d88ff;
+    color: #fefefe;
+  }
 
   &.icon_left {
     .text {

@@ -65,6 +65,10 @@ export default defineComponent({
   height: max-content;
 }
 
+.block_scroll {
+  min-height: 0;
+}
+
 .block,
 .block_scroll {
   padding: $gap-base;

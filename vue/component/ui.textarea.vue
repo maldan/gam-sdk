@@ -38,7 +38,6 @@ export default defineComponent({
     box-sizing: border-box;
     background: $gray-light;
     color: #9d9d9d;
-    border: 0;
     padding: 10px;
     flex: 1;
     outline: none;

@@ -73,6 +73,7 @@ button {
 
 .button_group_round_compact {
   display: flex;
+  width: max-content;
 
   button:first-child {
     border-radius: 5px 0 0 5px;
@@ -80,6 +81,7 @@ button {
   button {
     border-radius: 0;
     margin-right: 1px;
+    white-space: nowrap;
   }
   button:last-child {
     border-radius: 0 5px 5px 0;
