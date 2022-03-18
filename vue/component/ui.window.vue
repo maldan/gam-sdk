@@ -8,7 +8,13 @@
     </div>
     <div :class="$style.body"><slot name="body"></slot></div>
 
-    <div v-for="x in resize" :key="x" :ref="`resize_${x}`" draggable="false" :class="x"></div>
+    <div
+      v-for="x in resize"
+      :key="x"
+      :ref="`resize_${x}`"
+      draggable="false"
+      :class="$style[x]"
+    ></div>
   </div>
 </template>
 
@@ -19,29 +25,39 @@ import { EventHelper } from '@/gam_sdk_ui/vue/helper';
 export default defineComponent({
   props: {
     title: String,
-    /*x: {
-      type: Number,
-      default: 0,
-    },
-    y: {
-      type: Number,
-      default: 0,
-    },
-    width: {
-      type: Number,
-      default: 100,
-    },
-    height: {
-      type: Number,
-      default: 100,
-    },*/
   },
   async mounted() {
-    EventHelper.on(document, 'mousemove touchmove', this.documentMove);
-    EventHelper.on(document, 'mouseup touchend', this.documentUp);
-    EventHelper.on(this.$refs['header'] as HTMLElement, 'mousedown touchstart', this.down);
+    await this.$nextTick(() => {
+      EventHelper.on(document, 'mousemove touchmove', this.documentMove);
+      EventHelper.on(document, 'mouseup touchend', this.documentUp);
+      EventHelper.on(this.$refs['header'] as HTMLElement, 'mousedown touchstart', this.down);
+
+      this.resize.forEach((x: string) => {
+        EventHelper.on(
+          this.$refs[`resize_${x}`] as HTMLElement,
+          'mousedown touchstart',
+          (e: MouseEvent) => {
+            const y = x.split('').map((xx) => xx.toUpperCase());
+            y.forEach((yyy) => {
+              this.downDrag(e, yyy);
+            });
+          },
+        );
+      });
+    });
   },
   methods: {
+    downDrag(e: any, dir: string) {
+      const pageX = e.changedTouches ? e.changedTouches[0].pageX : e.pageX;
+      const pageY = e.changedTouches ? e.changedTouches[0].pageY : e.pageY;
+
+      this.capture = {
+        x: pageX,
+        y: pageY,
+      };
+      // @ts-ignore
+      this[`isDrag${dir}`] = true;
+    },
     documentUp(e: MouseEvent) {
       if (this.isDrag || this.isDragB || this.isDragT || this.isDragL || this.isDragR) {
         // RestApi.process.setWindow(this.modelValue as any);
@@ -56,77 +72,65 @@ export default defineComponent({
     documentMove(e: any) {
       const pageX = e.changedTouches ? e.changedTouches[0].pageX : e.pageX;
       const pageY = e.changedTouches ? e.changedTouches[0].pageY : e.pageY;
+      let isSkip = false;
 
+      // Header
       if (this.isDrag) {
         this.x = Math.max(this.x + (pageX - this.capture.x), 0);
         this.y = Math.max(this.y + (pageY - this.capture.y), 0);
       }
 
-      /*if (this.isDragB) {
-        this.$emit('update:modelValue', {
-          ...this.modelValue,
-          height: this.modelValue.height + (pageY - this.capture.y),
-        });
+      // Diagonal
+      if (this.isDragR && this.isDragB && !isSkip) {
+        this.width = Math.max(this.width + (pageX - this.capture.x), 128);
+        this.height = this.height + (pageY - this.capture.y);
+        isSkip = true;
       }
 
-      if (this.isDragT) {
-        this.$emit('update:modelValue', {
-          ...this.modelValue,
-          y: this.modelValue.y + (pageY - this.capture.y),
-          height: this.modelValue.height - (pageY - this.capture.y),
-        });
+      if (this.isDragL && this.isDragB && !isSkip) {
+        this.x = this.x + (pageX - this.capture.x);
+        this.width = Math.max(this.width - (pageX - this.capture.x), 128);
+        this.height = this.height + (pageY - this.capture.y);
+        isSkip = true;
       }
 
-      if (this.isDragR) {
-        this.$emit('update:modelValue', {
-          ...this.modelValue,
-          width: Math.max(this.modelValue.width + (pageX - this.capture.x), 320),
-        });
+      if (this.isDragR && this.isDragT && !isSkip) {
+        this.width = Math.max(this.width + (pageX - this.capture.x), 128);
+        this.y = this.y + (pageY - this.capture.y);
+        this.height = this.height - (pageY - this.capture.y);
+        isSkip = true;
       }
 
-      if (this.isDragL) {
-        this.$emit('update:modelValue', {
-          ...this.modelValue,
-          x: this.modelValue.x + (pageX - this.capture.x),
-          width: Math.max(this.modelValue.width - (pageX - this.capture.x), 320),
-        });
+      if (this.isDragL && this.isDragT && !isSkip) {
+        this.y = this.y + (pageY - this.capture.y);
+        this.height = this.height - (pageY - this.capture.y);
+        this.x = this.x + (pageX - this.capture.x);
+        this.width = Math.max(this.width - (pageX - this.capture.x), 128);
+        isSkip = true;
       }
 
-      if (this.isDragR && this.isDragB) {
-        this.$emit('update:modelValue', {
-          ...this.modelValue,
-          width: Math.max(this.modelValue.width + (pageX - this.capture.x), 320),
-          height: this.modelValue.height + (pageY - this.capture.y),
-        });
+      // Horizontal and vertical
+      if (this.isDragB && !isSkip) {
+        this.height = this.height + (pageY - this.capture.y);
+        isSkip = true;
       }
 
-      if (this.isDragL && this.isDragB) {
-        this.$emit('update:modelValue', {
-          ...this.modelValue,
-          x: this.modelValue.x + (pageX - this.capture.x),
-          width: Math.max(this.modelValue.width - (pageX - this.capture.x), 320),
-          height: this.modelValue.height + (pageY - this.capture.y),
-        });
+      if (this.isDragT && !isSkip) {
+        this.y = this.y + (pageY - this.capture.y);
+        this.height = this.height - (pageY - this.capture.y);
+        isSkip = true;
       }
 
-      if (this.isDragR && this.isDragT) {
-        this.$emit('update:modelValue', {
-          ...this.modelValue,
-          width: Math.max(this.modelValue.width + (pageX - this.capture.x), 320),
-          y: this.modelValue.y + (pageY - this.capture.y),
-          height: this.modelValue.height - (pageY - this.capture.y),
-        });
+      if (this.isDragR && !isSkip) {
+        this.width = Math.max(this.width + (pageX - this.capture.x), 128);
+        isSkip = true;
       }
 
-      if (this.isDragL && this.isDragT) {
-        this.$emit('update:modelValue', {
-          ...this.modelValue,
-          y: this.modelValue.y + (pageY - this.capture.y),
-          height: this.modelValue.height - (pageY - this.capture.y),
-          x: this.modelValue.x + (pageX - this.capture.x),
-          width: Math.max(this.modelValue.width - (pageX - this.capture.x), 320),
-        });
-      }*/
+      if (this.isDragL && !isSkip) {
+        this.x = this.x + (pageX - this.capture.x);
+        this.width = Math.max(this.width - (pageX - this.capture.x), 128);
+        isSkip = true;
+      }
 
       if (!(this.isDrag || this.isDragB || this.isDragT || this.isDragL || this.isDragR)) {
         return;
@@ -183,9 +187,18 @@ export default defineComponent({
     background: $gray-dark;
     padding: $gap-base;
     color: $text-gray;
+    position: relative;
+    box-sizing: border-box;
+    height: 40px;
   }
 
   .body {
+    width: 100%;
+    height: calc(100% - 40px);
+    position: absolute;
+    top: 40px;
+    box-sizing: border-box;
+
     padding: $gap-base;
     background: $gray-medium;
     overflow: auto;
