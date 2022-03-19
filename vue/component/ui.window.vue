@@ -24,10 +24,22 @@ import { EventHelper } from '@/gam_sdk_ui/vue/helper';
 
 export default defineComponent({
   props: {
+    id: String,
     title: String,
+    initData: {
+      type: Object,
+      default: () => {
+        return { x: 0, y: 0, width: 320, height: 240 };
+      },
+    },
   },
   async mounted() {
     await this.$nextTick(() => {
+      this.x = ~~this.initData.x;
+      this.y = ~~this.initData.y;
+      this.width = ~~this.initData.width || 128;
+      this.height = ~~this.initData.height || 128;
+
       EventHelper.on(document, 'mousemove touchmove', this.documentMove);
       EventHelper.on(document, 'mouseup touchend', this.documentUp);
       EventHelper.on(this.$refs['header'] as HTMLElement, 'mousedown touchstart', this.down);
