@@ -1,7 +1,7 @@
 <template>
   <div
     :class="$style.window"
-    :style="{ left: x + 'px', top: y + 'px', width: width + 'px', height: height + 'px' }"
+    :style="{ left: x + '%', top: y + '%', width: width + '%', height: height + '%' }"
   >
     <div ref="header" :class="$style.header">
       <slot name="header">{{ title }}</slot>
@@ -29,7 +29,7 @@ export default defineComponent({
     initData: {
       type: Object,
       default: () => {
-        return { x: 0, y: 0, width: 320, height: 240 };
+        return { x: 0, y: 0, width: 10, height: 10 };
       },
     },
   },
@@ -37,8 +37,8 @@ export default defineComponent({
     await this.$nextTick(() => {
       this.x = ~~this.initData.x;
       this.y = ~~this.initData.y;
-      this.width = ~~this.initData.width || 128;
-      this.height = ~~this.initData.height || 128;
+      this.width = ~~this.initData.width || 10;
+      this.height = ~~this.initData.height || 10;
 
       EventHelper.on(document, 'mousemove touchmove', this.documentMove);
       EventHelper.on(document, 'mouseup touchend', this.documentUp);
@@ -60,12 +60,9 @@ export default defineComponent({
   },
   methods: {
     downDrag(e: any, dir: string) {
-      const pageX = e.changedTouches ? e.changedTouches[0].pageX : e.pageX;
-      const pageY = e.changedTouches ? e.changedTouches[0].pageY : e.pageY;
-
       this.capture = {
-        x: pageX,
-        y: pageY,
+        x: ((e.changedTouches ? e.changedTouches[0].pageX : e.pageX) / window.innerWidth) * 100,
+        y: ((e.changedTouches ? e.changedTouches[0].pageY : e.pageY) / window.innerHeight) * 100,
       };
       // @ts-ignore
       this[`isDrag${dir}`] = true;
@@ -82,8 +79,10 @@ export default defineComponent({
       this.isDragR = false;
     },
     documentMove(e: any) {
-      const pageX = e.changedTouches ? e.changedTouches[0].pageX : e.pageX;
-      const pageY = e.changedTouches ? e.changedTouches[0].pageY : e.pageY;
+      const pageX =
+        ((e.changedTouches ? e.changedTouches[0].pageX : e.pageX) / window.innerWidth) * 100;
+      const pageY =
+        ((e.changedTouches ? e.changedTouches[0].pageY : e.pageY) / window.innerHeight) * 100;
       let isSkip = false;
 
       // Header
@@ -94,20 +93,20 @@ export default defineComponent({
 
       // Diagonal
       if (this.isDragR && this.isDragB && !isSkip) {
-        this.width = Math.max(this.width + (pageX - this.capture.x), 128);
+        this.width = this.width + (pageX - this.capture.x);
         this.height = this.height + (pageY - this.capture.y);
         isSkip = true;
       }
 
       if (this.isDragL && this.isDragB && !isSkip) {
         this.x = this.x + (pageX - this.capture.x);
-        this.width = Math.max(this.width - (pageX - this.capture.x), 128);
+        this.width = this.width - (pageX - this.capture.x);
         this.height = this.height + (pageY - this.capture.y);
         isSkip = true;
       }
 
       if (this.isDragR && this.isDragT && !isSkip) {
-        this.width = Math.max(this.width + (pageX - this.capture.x), 128);
+        this.width = this.width + (pageX - this.capture.x);
         this.y = this.y + (pageY - this.capture.y);
         this.height = this.height - (pageY - this.capture.y);
         isSkip = true;
@@ -117,7 +116,7 @@ export default defineComponent({
         this.y = this.y + (pageY - this.capture.y);
         this.height = this.height - (pageY - this.capture.y);
         this.x = this.x + (pageX - this.capture.x);
-        this.width = Math.max(this.width - (pageX - this.capture.x), 128);
+        this.width = this.width - (pageX - this.capture.x);
         isSkip = true;
       }
 
@@ -134,13 +133,13 @@ export default defineComponent({
       }
 
       if (this.isDragR && !isSkip) {
-        this.width = Math.max(this.width + (pageX - this.capture.x), 128);
+        this.width = this.width + (pageX - this.capture.x);
         isSkip = true;
       }
 
       if (this.isDragL && !isSkip) {
         this.x = this.x + (pageX - this.capture.x);
-        this.width = Math.max(this.width - (pageX - this.capture.x), 128);
+        this.width = this.width - (pageX - this.capture.x);
         isSkip = true;
       }
 
@@ -154,13 +153,10 @@ export default defineComponent({
       };
     },
     down(e: MouseEvent & TouchEvent) {
-      const pageX = e.changedTouches ? e.changedTouches[0].pageX : e.pageX;
-      const pageY = e.changedTouches ? e.changedTouches[0].pageY : e.pageY;
-
       this.isDrag = true;
       this.capture = {
-        x: pageX,
-        y: pageY,
+        x: ((e.changedTouches ? e.changedTouches[0].pageX : e.pageX) / window.innerWidth) * 100,
+        y: ((e.changedTouches ? e.changedTouches[0].pageY : e.pageY) / window.innerHeight) * 100,
       };
     },
   },
@@ -168,8 +164,8 @@ export default defineComponent({
     return {
       x: 0,
       y: 0,
-      width: 320,
-      height: 240,
+      width: 10,
+      height: 10,
       isDrag: false,
       capture: {
         x: 0,
