@@ -1,5 +1,5 @@
-@import "./color.scss";
-@import "./size.scss";
+@import './color.scss';
+@import './size.scss';
 
 * {
   &::-webkit-scrollbar {
@@ -47,7 +47,7 @@ button {
 }
 
 .shadow {
-  box-shadow: 0px 1px 6px 2px #00000055;
+  box-shadow: 0 1px 6px 2px #00000055;
 }
 
 @mixin base_button($bg, $color, $padding, $radius) {
