@@ -198,6 +198,8 @@ export default defineComponent({
     position: relative;
     box-sizing: border-box;
     height: 40px;
+    display: flex;
+    align-items: center;
   }
 
   .body {
