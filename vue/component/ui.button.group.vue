@@ -26,6 +26,7 @@ export default defineComponent({
   methods: {
     change(id: string) {
       this.$emit('update:modelValue', id);
+      this.$emit('change', id);
     },
   },
   data: () => {
