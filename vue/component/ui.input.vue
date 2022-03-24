@@ -11,12 +11,22 @@
 
     <!-- Text -->
     <input
-      v-if="isEditAsText || (type !== 'date' && type !== 'datetime')"
+      v-if="isEditAsText || (type !== 'date' && type !== 'datetime' && type !== 'file')"
       ref="input"
       :class="$style.input_field"
       :type="isEditAsText ? 'text' : type"
       :placeholder="placeholder"
       :value="modelValue"
+      @input="change"
+    />
+
+    <input
+      v-if="type === 'file'"
+      ref="input"
+      :class="$style.input_field"
+      :type="type"
+      :placeholder="placeholder"
+      :accept="accept"
       @input="change"
     />
 
@@ -102,8 +112,13 @@ export default defineComponent({
     functionIcon: String,
     functionClick: [Function, String],
     modelValue: {
-      type: String,
+      type: [String, Object],
       required: true,
+      default: '',
+    },
+    accept: {
+      type: String,
+      default: '',
     },
     type: String,
   },
@@ -129,6 +144,15 @@ export default defineComponent({
     };
     document.addEventListener('mousemove', this.mouseMove);
     document.addEventListener('mouseup', this.mouseUp);
+
+    await this.$nextTick(() => {
+      if (this.type === 'file') {
+        const input = this.$refs['input'] as HTMLInputElement;
+        input.addEventListener('change', (e: any) => {
+          this.$emit('update:modelValue', input.files);
+        });
+      }
+    });
   },
   beforeUnmount() {
     document.removeEventListener('mousemove', this.mouseMove);

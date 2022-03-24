@@ -1,5 +1,5 @@
 export default {
-  install: (app: any, options: any) => {
+  install: (app: any, options: unknown) => {
     // Register ui components
     const ui = require.context('./component/', true, /^.*\.vue$/).keys();
     for (let i = 0; i < ui.length; i++) {
@@ -7,8 +7,9 @@ export default {
         .replace('./', '')
         .replace('.vue', '')
         .replace(/\//g, '-')
-        .replace(/\./g, '-');
-
+        .replace(/\./g, '-')
+        .replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase())
+        .replace(/--/g, '-');
       const sas = require('./component/' + ui[i].replace('./', ''));
       app.component(name, sas.default);
     }
@@ -21,8 +22,9 @@ export default {
         .replace('.vue', '')
         .replace(/\//g, '-')
         .replace(/\./g, '-')
+        .replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase())
+        .replace(/--/g, '-')
         .toLowerCase();
-
       const sas = require('@/component/' + components[i].replace('./', ''));
       app.component(`${name}`, sas.default);
     }
