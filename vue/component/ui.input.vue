@@ -292,13 +292,12 @@ export default defineComponent({
     box-sizing: border-box;
     background: $gray-light;
     color: $text-gray;
-    border: 0;
     padding: 10px;
     flex: 1;
     outline: none;
     font-size: 16px;
     border: 1px solid transparent;
-    min-width: 0;
+    min-width: 1px;
 
     &:focus {
       border: 1px solid $text-gray;

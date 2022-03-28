@@ -17,6 +17,7 @@
       icon="arrow_down"
       :color="iconColor"
       :class="$style.button"
+      :icon-size="iconSize"
     />
 
     <!-- Menu -->
@@ -48,6 +49,10 @@ export default defineComponent({
     iconColor: {
       type: String,
       default: '#E38414',
+    },
+    iconSize: {
+      type: Number,
+      default: 24,
     },
   },
   async mounted() {},
@@ -129,6 +134,7 @@ export default defineComponent({
     outline: none;
     font-size: 16px;
     border: 1px solid transparent;
+    width: 1px;
 
     &:focus {
       border: 1px solid #888888;
