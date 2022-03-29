@@ -36,6 +36,7 @@ export default defineComponent({
         if (bp >= 100) bp = 100;
         // this.boxPosition = bp;
         this.$emit('update:modelValue', bp / 100);
+        this.$emit('change', bp / 100);
       }
     };
     this.mouseUp = () => {
