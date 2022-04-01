@@ -6,6 +6,7 @@
       :text="x.text"
       :icon="x.icon"
       :isSelected="x.id === modelValue"
+      :styleType="styleType"
       @click="change(x.id)"
     />
   </div>
@@ -21,6 +22,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    styleType: String,
   },
   async mounted() {},
   methods: {

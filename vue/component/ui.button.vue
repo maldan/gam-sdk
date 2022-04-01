@@ -4,6 +4,7 @@
       $style.button,
       $style[`icon_` + (icon ? iconPosition : 'none')],
       isSelected ? $style['selected'] : null,
+      styleType ? $style['button_' + styleType] : null,
     ]"
   >
     <ui-icon
@@ -60,6 +61,7 @@ export default defineComponent({
       type: Number,
       default: 24,
     },
+    styleType: String,
   },
   async mounted() {},
   methods: {},
@@ -136,5 +138,10 @@ export default defineComponent({
     opacity: 0.6;
     top: 1px;
   }
+}
+
+.button_small {
+  padding: $gap-base / 2;
+  font-size: 14px;
 }
 </style>
