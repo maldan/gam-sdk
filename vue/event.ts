@@ -1,11 +1,11 @@
 export default {
-  install: (app: any, options: any) => {
+  install: (app: any, options: unknown) => {
     app.directive('doubleclick', {
-      created(el: any, binding: any, vnode: any, prevVnode: any) {
+      created(el: HTMLElement, binding: any, vnode: any, prevVnode: any) {
         let clicks = 0;
         let timer = null as any;
 
-        el.addEventListener('click', (e: any) => {
+        el.addEventListener('click', (e: MouseEvent) => {
           clicks += 1;
 
           if (clicks === 1) {
