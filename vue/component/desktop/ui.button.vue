@@ -59,7 +59,7 @@ export default defineComponent({
     },
     iconSize: {
       type: Number,
-      default: 24,
+      default: 20,
     },
     styleType: String,
   },
