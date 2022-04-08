@@ -1,5 +1,6 @@
 <template>
   <div
+    @click.stop=""
     :class="$style.window"
     :style="{ left: x + '%', top: y + '%', width: width + '%', height: height + '%' }"
   >
