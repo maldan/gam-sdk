@@ -5,7 +5,7 @@
         ref="box"
         @mousedown="startDrag"
         :class="$style.box"
-        :style="{ left: `${modelValue * 100}%`, height: height + 'px' }"
+        :style="{ left: `${remap(modelValue, min, max, 0, 1) * 100}%`, height: height + 'px' }"
       ></div>
     </div>
   </div>
@@ -24,6 +24,14 @@ export default defineComponent({
       type: Number,
       default: 8,
     },
+    min: {
+      type: Number,
+      default: 0,
+    },
+    max: {
+      type: Number,
+      default: 1,
+    },
   },
   computed: {},
   async mounted() {
@@ -32,11 +40,15 @@ export default defineComponent({
         const delta = e.pageX - this.startDragPosition.x;
 
         let bp = this.startBoxPosition.x + (delta / this.boxWidth) * 100;
+
         if (bp <= 0) bp = 0;
         if (bp >= 100) bp = 100;
+
+        bp = this.remap(bp / 100, 0, 1, this.min, this.max);
+
         // this.boxPosition = bp;
-        this.$emit('update:modelValue', bp / 100);
-        this.$emit('change', bp / 100);
+        this.$emit('update:modelValue', bp);
+        this.$emit('change', bp);
       }
     };
     this.mouseUp = () => {
@@ -52,11 +64,14 @@ export default defineComponent({
   methods: {
     startDrag(e: MouseEvent) {
       this.startDragPosition.x = e.pageX;
-      this.startBoxPosition.x = this.modelValue * 100;
+      this.startBoxPosition.x = this.remap(this.modelValue, this.min, this.max, 0, 1) * 100;
       this.isDrag = true;
 
       const body = this.$refs['body'] as HTMLElement;
       this.boxWidth = body.getBoundingClientRect().width;
+    },
+    remap(value: number, low1: number, high1: number, low2: number, high2: number) {
+      return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
     },
     /*change() {
       this.$emit('update:modelValue', this.modelValue);
