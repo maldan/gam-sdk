@@ -40,6 +40,7 @@ export default defineComponent({
   display: flex;
   background-color: $gray-dark;
   padding: 10px;
+  user-select: none;
 
   button {
     background: #2e2e2e;
