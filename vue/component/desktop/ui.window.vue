@@ -2,7 +2,7 @@
   <div
     @click.stop=""
     :class="$style.window"
-    :style="{ left: x + '%', top: y + '%', width: width + '%', height: height + '%' }"
+    :style="{ left: x + '%', top: y + '%', width: width + '%', height: height + '%', zIndex }"
   >
     <div ref="header" :class="$style.header">
       <slot name="header">{{ title }}</slot>
@@ -57,6 +57,15 @@ export default defineComponent({
           },
         );
       });
+
+      // @ts-ignore
+      if (!Array.isArray(window['ui.window.list'])) {
+        // @ts-ignore
+        window['ui.window.list'] = [];
+      }
+
+      // @ts-ignore
+      window['ui.window.list'].push(this);
     });
   },
   methods: {
@@ -159,6 +168,27 @@ export default defineComponent({
         x: ((e.changedTouches ? e.changedTouches[0].pageX : e.pageX) / window.innerWidth) * 100,
         y: ((e.changedTouches ? e.changedTouches[0].pageY : e.pageY) / window.innerHeight) * 100,
       };
+
+      // @ts-ignore
+      window['ui.window.focusWindow'] = this.id;
+
+      // @ts-ignore
+      const list = window['ui.window.list'] ?? [];
+      for (let i = 0; i < list.length; i++) {
+        // @ts-ignore
+        const isMe = window['ui.window.focusWindow'] === list[i].id;
+        // @ts-ignore
+        list[i].setZIndex(isMe ? 2 : 1);
+
+        if (isMe) {
+          list[i].$emit('focus');
+        } else {
+          list[i].$emit('blur');
+        }
+      }
+    },
+    setZIndex(value: number) {
+      this.zIndex = value;
     },
   },
   data: () => {
@@ -177,6 +207,7 @@ export default defineComponent({
       isDragL: false,
       isDragR: false,
       resize: ['l', 'r', 't', 'b', 'tr', 'tl', 'br', 'bl'],
+      zIndex: 1,
     };
   },
 });
