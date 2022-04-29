@@ -18,11 +18,13 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   props: {
     items: Array,
+    byMatch: Boolean,
   },
   components: {},
   async mounted() {},
   methods: {
     selected(path: string) {
+      if (this.byMatch) return this.$route.path.match(path);
       if (this.$route.path === path) return true;
       else return false;
     },
