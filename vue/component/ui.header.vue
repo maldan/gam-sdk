@@ -9,6 +9,7 @@
     >
       {{ x.name }}
     </button>
+    <slot name="content" />
   </div>
 </template>
 
@@ -18,11 +19,13 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   props: {
     items: Array,
+    byMatch: Boolean,
   },
   components: {},
   async mounted() {},
   methods: {
     selected(path: string) {
+      if (this.byMatch) return this.$route.path.match(path);
       if (this.$route.path === path) return true;
       else return false;
     },
@@ -40,6 +43,8 @@ export default defineComponent({
   display: flex;
   background-color: $gray-dark;
   padding: 10px;
+  user-select: none;
+  align-items: center;
 
   button {
     background: #2e2e2e;

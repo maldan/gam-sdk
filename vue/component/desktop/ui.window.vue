@@ -2,7 +2,7 @@
   <div
     @click.stop=""
     :class="$style.window"
-    :style="{ left: x + '%', top: y + '%', width: width + '%', height: height + '%' }"
+    :style="{ left: x + '%', top: y + '%', width: width + '%', height: height + '%', zIndex }"
   >
     <div ref="header" :class="$style.header">
       <slot name="header">{{ title }}</slot>
@@ -57,6 +57,15 @@ export default defineComponent({
           },
         );
       });
+
+      // @ts-ignore
+      if (!Array.isArray(window['ui.window.list'])) {
+        // @ts-ignore
+        window['ui.window.list'] = [];
+      }
+
+      // @ts-ignore
+      window['ui.window.list'].push(this);
     });
   },
   methods: {
@@ -159,6 +168,27 @@ export default defineComponent({
         x: ((e.changedTouches ? e.changedTouches[0].pageX : e.pageX) / window.innerWidth) * 100,
         y: ((e.changedTouches ? e.changedTouches[0].pageY : e.pageY) / window.innerHeight) * 100,
       };
+
+      // @ts-ignore
+      window['ui.window.focusWindow'] = this.id;
+
+      // @ts-ignore
+      const list = window['ui.window.list'] ?? [];
+      for (let i = 0; i < list.length; i++) {
+        // @ts-ignore
+        const isMe = window['ui.window.focusWindow'] === list[i].id;
+        // @ts-ignore
+        list[i].setZIndex(isMe ? 2 : 1);
+
+        if (isMe) {
+          list[i].$emit('focus');
+        } else {
+          list[i].$emit('blur');
+        }
+      }
+    },
+    setZIndex(value: number) {
+      this.zIndex = value;
     },
   },
   data: () => {
@@ -177,14 +207,15 @@ export default defineComponent({
       isDragL: false,
       isDragR: false,
       resize: ['l', 'r', 't', 'b', 'tr', 'tl', 'br', 'bl'],
+      zIndex: 1,
     };
   },
 });
 </script>
 
 <style module lang="scss">
-@import '../style/color.scss';
-@import '../style/size.scss';
+@import '../../style/color.scss';
+@import '../../style/size.scss';
 
 .window {
   display: flex;
@@ -193,21 +224,23 @@ export default defineComponent({
   user-select: none;
 
   .header {
-    background: $gray-dark;
+    background: lighten($gray-dark, 4%);
     padding: $gap-base;
-    color: $text-gray;
+    color: darken($text-gray, 10%);
     position: relative;
     box-sizing: border-box;
-    height: 40px;
+    height: 32px;
     display: flex;
     align-items: center;
+    font-size: 14px;
+    border-radius: 4px 4px 0 0;
   }
 
   .body {
     width: 100%;
-    height: calc(100% - 40px);
+    height: calc(100% - 32px);
     position: absolute;
-    top: 40px;
+    top: 32px;
     box-sizing: border-box;
 
     padding: $gap-base;

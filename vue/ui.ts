@@ -24,7 +24,9 @@ export default {
         .replace(/\./g, '-')
         .replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase())
         .replace(/--/g, '-')
-        .toLowerCase();
+        .toLowerCase()
+        .replace(/-index/g, '');
+
       const sas = require('@/component/' + components[i].replace('./', ''));
       app.component(`${name}`, sas.default);
     }

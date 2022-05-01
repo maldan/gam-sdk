@@ -59,7 +59,7 @@ export default defineComponent({
     },
     iconSize: {
       type: Number,
-      default: 24,
+      default: 20,
     },
     styleType: String,
   },
@@ -72,18 +72,18 @@ export default defineComponent({
 </script>
 
 <style module lang="scss">
-@import '../style/color.scss';
-@import '../style/size.scss';
+@import '../../style/color.scss';
+@import '../../style/size.scss';
 
 .button {
   background-color: $gray-light;
   color: $text-gray;
   border: 1px solid transparent;
-  padding: $gap-base;
+  padding: 5px;
   border-radius: 4px;
   flex: 1;
-  font-weight: bold;
-  font-size: 16px;
+  font-weight: normal;
+  font-size: 14px;
   cursor: pointer;
   user-select: none;
   display: flex;
