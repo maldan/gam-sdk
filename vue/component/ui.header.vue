@@ -9,6 +9,7 @@
     >
       {{ x.name }}
     </button>
+    <slot name="content" />
   </div>
 </template>
 
@@ -43,6 +44,7 @@ export default defineComponent({
   background-color: $gray-dark;
   padding: 10px;
   user-select: none;
+  align-items: center;
 
   button {
     background: #2e2e2e;
