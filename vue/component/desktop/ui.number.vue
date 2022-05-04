@@ -1,8 +1,8 @@
 <template>
   <div :class="$style.number">
-    <div class="clickable" :class="[$style.button, $style.left]" @click="change(-1)">-</div>
+    <div class="clickable" :class="[$style.button, $style.left]" @click="change(-step)">-</div>
     <desktop-ui-input @change="changeString" :class="$style.input" v-model="val" />
-    <div class="clickable" :class="[$style.button, $style.right]" @click="change(1)">+</div>
+    <div class="clickable" :class="[$style.button, $style.right]" @click="change(step)">+</div>
   </div>
 </template>
 
@@ -19,13 +19,18 @@ export default defineComponent({
       required: true,
       default: 0,
     },
+    step: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
   },
   async mounted() {
     this.val = this.modelValue + '';
   },
   methods: {
     changeString() {
-      const n = Number.parseInt(this.val);
+      const n = Number.parseFloat(this.val);
       this.$emit('update:modelValue', n);
       this.$emit('change', n);
     },
