@@ -34,6 +34,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 
   .window {
     display: flex;
