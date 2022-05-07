@@ -65,7 +65,9 @@ export default defineComponent({
   },
   watch: {
     name() {
-      this.refresh();
+      this.$nextTick(() => {
+        this.refresh();
+      });
     },
   },
   data: () => {

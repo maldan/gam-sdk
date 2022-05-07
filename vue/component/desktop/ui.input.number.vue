@@ -13,10 +13,11 @@
     <input
       ref="input"
       :class="$style.input_field"
-      :type="type"
+      type="number"
       :placeholder="placeholder"
       :value="modelValue"
       @input="change"
+      :step="step"
     />
 
     <ui-button
@@ -45,13 +46,13 @@ export default defineComponent({
     functionIcon: String,
     functionClick: [Function, String],
     modelValue: {
-      type: [String, Number],
+      type: Number,
       required: true,
-      default: '',
+      default: 0,
     },
-    type: {
-      type: String,
-      default: 'text',
+    step: {
+      type: Number,
+      default: 1,
     },
   },
   computed: {},
@@ -59,7 +60,7 @@ export default defineComponent({
   beforeUnmount() {},
   methods: {
     change(e: any) {
-      this.$emit('update:modelValue', e.target.value);
+      this.$emit('update:modelValue', Number.parseFloat(e.target.value));
     },
     clickOnFunction() {
       if (typeof this.functionClick === 'function') {
